@@ -16,57 +16,57 @@ module PlatformReference {
   instance blockDrv: Drv.BlockDriver base id 0x0100 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
-    priority 140
+    priority 50
 
   instance rateGroup1: Svc.ActiveRateGroup base id 0x0200 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
-    priority 120
+    priority 51
 
   instance rateGroup2: Svc.ActiveRateGroup base id 0x0300 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
-    priority 119
+    priority 52
 
   instance rateGroup3: Svc.ActiveRateGroup base id 0x0400 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
-    priority 118
+    priority 53
 
   instance cmdDisp: Svc.CommandDispatcher base id 0x0500 \
     queue size 20 \
     stack size Default.STACK_SIZE \
-    priority 101
+    priority 54
 
   instance cmdSeq: Svc.CmdSequencer base id 0x0600 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
-    priority 100
+    priority 55
 
   instance comQueue: Svc.ComQueue base id 0x0700 \
       queue size Default.QUEUE_SIZE \
       stack size Default.STACK_SIZE \
-      priority 100 \
+      priority 56
 
   instance fileDownlink: Svc.FileDownlink base id 0x0800 \
     queue size 30 \
     stack size Default.STACK_SIZE \
-    priority 100
+    priority 57
 
   instance fileManager: Svc.FileManager base id 0x0900 \
     queue size 30 \
     stack size Default.STACK_SIZE \
-    priority 100
+    priority 58
 
   instance fileUplink: Svc.FileUplink base id 0x0A00 \
     queue size 30 \
     stack size Default.STACK_SIZE \
-    priority 100
+    priority 59
 
   instance eventLogger: Svc.ActiveLogger base id 0x0B00 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
-    priority 98
+    priority 60
 
   # comment in Svc.TlmChan or Svc.TlmPacketizer
   # depending on which form of telemetry downlink
@@ -75,24 +75,24 @@ module PlatformReference {
   instance tlmSend: Svc.TlmChan base id 0x0C00 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
-    priority 97
+    priority 61
 
   #instance tlmSend: Svc.TlmPacketizer base id 0x0C00 \
   #    queue size Default.QUEUE_SIZE \
   #    stack size Default.STACK_SIZE \
-  #    priority 97
+  #    priority 61
 
   instance prmDb: Svc.PrmDb base id 0x0D00 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
-    priority 96
+    priority 62
 
   # ----------------------------------------------------------------------
   # Queued component instances
   # ----------------------------------------------------------------------
 
   instance $health: Svc.Health base id 0x2000 \
-    queue size 25
+    queue size 63
 
   # ----------------------------------------------------------------------
   # Passive component instances
