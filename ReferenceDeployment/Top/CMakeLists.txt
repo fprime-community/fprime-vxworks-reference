@@ -8,9 +8,9 @@
 set(SOURCE_FILES
   "${CMAKE_CURRENT_LIST_DIR}/instances.fpp"
   # Note: Uncomment when using Svc:TlmPacketizer
-  #"${CMAKE_CURRENT_LIST_DIR}/PlatformReferencePackets.xml"
+  #"${CMAKE_CURRENT_LIST_DIR}/ReferenceDeploymentPackets.xml"
   "${CMAKE_CURRENT_LIST_DIR}/topology.fpp"
-  "${CMAKE_CURRENT_LIST_DIR}/PlatformReferenceTopology.cpp"
+  "${CMAKE_CURRENT_LIST_DIR}/ReferenceDeploymentTopology.cpp"
 )
 set(MOD_DEPS
   Fw/Logger

@@ -1,12 +1,12 @@
 // ======================================================================
-// \title  PlatformReferenceTopology.cpp
+// \title  ReferenceDeploymentTopology.cpp
 // \brief cpp file containing the topology instantiation code
 //
 // ======================================================================
 // Provides access to autocoded functions
-#include <PlatformReference/Top/PlatformReferenceTopologyAc.hpp>
+#include <ReferenceDeployment/Top/ReferenceDeploymentTopologyAc.hpp>
 // Note: Uncomment when using Svc:TlmPacketizer
-//#include <PlatformReference/Top/PlatformReferencePacketsAc.hpp>
+//#include <ReferenceDeployment/Top/ReferenceDeploymentPacketsAc.hpp>
 
 // Necessary project-specified types
 #include <Fw/Types/MallocAllocator.hpp>
@@ -16,7 +16,7 @@
 #include <Os/Mutex.hpp>
 
 // Allows easy reference to objects in FPP/autocoder required namespaces
-using namespace PlatformReference;
+using namespace ReferenceDeployment;
 
 // The reference topology uses a malloc-based allocator for components that need to allocate memory during the
 // initialization phase.
@@ -59,18 +59,18 @@ enum TopologyConstants {
 
 // Ping entries are autocoded, however; this code is not properly exported. Thus, it is copied here.
 Svc::Health::PingEntry pingEntries[] = {
-    {PingEntries::PlatformReference_blockDrv::WARN, PingEntries::PlatformReference_blockDrv::FATAL, "blockDrv"},
-    {PingEntries::PlatformReference_tlmSend::WARN, PingEntries::PlatformReference_tlmSend::FATAL, "chanTlm"},
-    {PingEntries::PlatformReference_cmdDisp::WARN, PingEntries::PlatformReference_cmdDisp::FATAL, "cmdDisp"},
-    {PingEntries::PlatformReference_cmdSeq::WARN, PingEntries::PlatformReference_cmdSeq::FATAL, "cmdSeq"},
-    {PingEntries::PlatformReference_eventLogger::WARN, PingEntries::PlatformReference_eventLogger::FATAL, "eventLogger"},
-    {PingEntries::PlatformReference_fileDownlink::WARN, PingEntries::PlatformReference_fileDownlink::FATAL, "fileDownlink"},
-    {PingEntries::PlatformReference_fileManager::WARN, PingEntries::PlatformReference_fileManager::FATAL, "fileManager"},
-    {PingEntries::PlatformReference_fileUplink::WARN, PingEntries::PlatformReference_fileUplink::FATAL, "fileUplink"},
-    {PingEntries::PlatformReference_prmDb::WARN, PingEntries::PlatformReference_prmDb::FATAL, "prmDb"},
-    {PingEntries::PlatformReference_rateGroup1::WARN, PingEntries::PlatformReference_rateGroup1::FATAL, "rateGroup1"},
-    {PingEntries::PlatformReference_rateGroup2::WARN, PingEntries::PlatformReference_rateGroup2::FATAL, "rateGroup2"},
-    {PingEntries::PlatformReference_rateGroup3::WARN, PingEntries::PlatformReference_rateGroup3::FATAL, "rateGroup3"},
+    {PingEntries::ReferenceDeployment_blockDrv::WARN, PingEntries::ReferenceDeployment_blockDrv::FATAL, "blockDrv"},
+    {PingEntries::ReferenceDeployment_tlmSend::WARN, PingEntries::ReferenceDeployment_tlmSend::FATAL, "chanTlm"},
+    {PingEntries::ReferenceDeployment_cmdDisp::WARN, PingEntries::ReferenceDeployment_cmdDisp::FATAL, "cmdDisp"},
+    {PingEntries::ReferenceDeployment_cmdSeq::WARN, PingEntries::ReferenceDeployment_cmdSeq::FATAL, "cmdSeq"},
+    {PingEntries::ReferenceDeployment_eventLogger::WARN, PingEntries::ReferenceDeployment_eventLogger::FATAL, "eventLogger"},
+    {PingEntries::ReferenceDeployment_fileDownlink::WARN, PingEntries::ReferenceDeployment_fileDownlink::FATAL, "fileDownlink"},
+    {PingEntries::ReferenceDeployment_fileManager::WARN, PingEntries::ReferenceDeployment_fileManager::FATAL, "fileManager"},
+    {PingEntries::ReferenceDeployment_fileUplink::WARN, PingEntries::ReferenceDeployment_fileUplink::FATAL, "fileUplink"},
+    {PingEntries::ReferenceDeployment_prmDb::WARN, PingEntries::ReferenceDeployment_prmDb::FATAL, "prmDb"},
+    {PingEntries::ReferenceDeployment_rateGroup1::WARN, PingEntries::ReferenceDeployment_rateGroup1::FATAL, "rateGroup1"},
+    {PingEntries::ReferenceDeployment_rateGroup2::WARN, PingEntries::ReferenceDeployment_rateGroup2::FATAL, "rateGroup2"},
+    {PingEntries::ReferenceDeployment_rateGroup3::WARN, PingEntries::ReferenceDeployment_rateGroup3::FATAL, "rateGroup3"},
 };
 
 /**
@@ -119,7 +119,7 @@ void configureTopology() {
     health.setPingEntries(pingEntries, FW_NUM_ARRAY_ELEMENTS(pingEntries), HEALTH_WATCHDOG_CODE);
 
     // Note: Uncomment when using Svc:TlmPacketizer
-    // tlmSend.setPacketList(PlatformReferencePacketsPkts, PlatformReferencePacketsIgnore, 1);
+    // tlmSend.setPacketList(ReferenceDeploymentPacketsPkts, ReferenceDeploymentPacketsIgnore, 1);
 
     // Events (highest-priority)
     configurationTable.entries[0] = {.depth = 100, .priority = 0};
@@ -131,8 +131,8 @@ void configureTopology() {
     comQueue.configure(configurationTable, 0, mallocator);
 }
 
-// Public functions for use in main program are namespaced with deployment name PlatformReference
-namespace PlatformReference {
+// Public functions for use in main program are namespaced with deployment name ReferenceDeployment
+namespace ReferenceDeployment {
 void setupTopology(const TopologyState& state) {
     // Autocoded initialization. Function provided by autocoder.
     initComponents(state);
@@ -170,7 +170,7 @@ void startSimulatedCycle(Fw::TimeInterval interval) {
 
     // Main loop
     while (cycling) {
-        PlatformReference::blockDrv.callIsr();
+        ReferenceDeployment::blockDrv.callIsr();
         Os::Task::delay(interval);
 
         cycleLock.lock();
@@ -198,4 +198,4 @@ void teardownTopology(const TopologyState& state) {
     cmdSeq.deallocateBuffer(mallocator);
     bufferManager.cleanup();
 }
-};  // namespace PlatformReference
+};  // namespace ReferenceDeployment

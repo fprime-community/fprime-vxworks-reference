@@ -4,7 +4,7 @@
 //
 // ======================================================================
 // Used to access topology functions
-#include <PlatformReference/Top/PlatformReferenceTopology.hpp>
+#include <ReferenceDeployment/Top/ReferenceDeploymentTopology.hpp>
 // OSAL initialization
 #include <Os/Os.hpp>
 // Used for signal handling shutdown
@@ -34,7 +34,7 @@ void print_usage(const char* app) {
  * @param signum
  */
 static void signalHandler(int signum) {
-    PlatformReference::stopSimulatedCycle();
+    ReferenceDeployment::stopSimulatedCycle();
 }
 
 /**
@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
         }
     }
     // Object for communicating state to the reference topology
-    PlatformReference::TopologyState inputs;
+    ReferenceDeployment::TopologyState inputs;
     inputs.hostname = hostname;
     inputs.port = port_number;
 
@@ -85,9 +85,9 @@ int main(int argc, char* argv[]) {
     (void)printf("Hit Ctrl-C to quit\n");
 
     // Setup, cycle, and teardown topology
-    PlatformReference::setupTopology(inputs);
-    PlatformReference::startSimulatedCycle(Fw::TimeInterval(1,0));  // Program loop cycling rate groups at 1Hz
-    PlatformReference::teardownTopology(inputs);
+    ReferenceDeployment::setupTopology(inputs);
+    ReferenceDeployment::startSimulatedCycle(Fw::TimeInterval(1,0));  // Program loop cycling rate groups at 1Hz
+    ReferenceDeployment::teardownTopology(inputs);
     (void)printf("Exiting...\n");
     return 0;
 }

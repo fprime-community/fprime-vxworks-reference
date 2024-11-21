@@ -1,4 +1,4 @@
-module PlatformReference {
+module ReferenceDeployment {
 
   # ----------------------------------------------------------------------
   # Defaults

@@ -1,5 +1,5 @@
 // ======================================================================
-// \title  PlatformReferenceTopologyDefs.hpp
+// \title  ReferenceDeploymentTopologyDefs.hpp
 // \brief required header file containing the required definitions for the topology autocoder
 //
 // ======================================================================
@@ -8,17 +8,17 @@
 
 #include "Drv/BlockDriver/BlockDriver.hpp"
 #include "Fw/Types/MallocAllocator.hpp"
-#include "PlatformReference/Top/FppConstantsAc.hpp"
+#include "ReferenceDeployment/Top/FppConstantsAc.hpp"
 #include "Svc/FramingProtocol/FprimeProtocol.hpp"
 #include "Svc/Health/Health.hpp"
 
 // Definitions are placed within a namespace named after the deployment
-namespace PlatformReference {
+namespace ReferenceDeployment {
 
 /**
  * \brief required type definition to carry state
  *
- * The topology autocoder requires an object that carries state with the name `PlatformReference::TopologyState`. Only the type
+ * The topology autocoder requires an object that carries state with the name `ReferenceDeployment::TopologyState`. Only the type
  * definition is required by the autocoder and the contents of this object are otherwise opaque to the autocoder. The contents are entirely up
  * to the definition of the project. Here, they are derived from command line inputs.
  */
@@ -47,42 +47,42 @@ struct TopologyState {
  * ```
  */
 namespace PingEntries {
-namespace PlatformReference_blockDrv {
+namespace ReferenceDeployment_blockDrv {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace PlatformReference_tlmSend {
+namespace ReferenceDeployment_tlmSend {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace PlatformReference_cmdDisp {
+namespace ReferenceDeployment_cmdDisp {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace PlatformReference_cmdSeq {
+namespace ReferenceDeployment_cmdSeq {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace PlatformReference_eventLogger {
+namespace ReferenceDeployment_eventLogger {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace PlatformReference_fileDownlink {
+namespace ReferenceDeployment_fileDownlink {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace PlatformReference_fileManager {
+namespace ReferenceDeployment_fileManager {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace PlatformReference_fileUplink {
+namespace ReferenceDeployment_fileUplink {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace PlatformReference_prmDb {
+namespace ReferenceDeployment_prmDb {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace PlatformReference_rateGroup1 {
+namespace ReferenceDeployment_rateGroup1 {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace PlatformReference_rateGroup2 {
+namespace ReferenceDeployment_rateGroup2 {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace PlatformReference_rateGroup3 {
+namespace ReferenceDeployment_rateGroup3 {
 enum { WARN = 3, FATAL = 5 };
 }
 }  // namespace PingEntries
-}  // namespace PlatformReference
+}  // namespace ReferenceDeployment
 #endif

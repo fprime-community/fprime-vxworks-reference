@@ -1,4 +1,4 @@
-module PlatformReference {
+module ReferenceDeployment {
 
   # ----------------------------------------------------------------------
   # Symbolic constants for port numbers
@@ -10,7 +10,7 @@ module PlatformReference {
     rateGroup3
   }
 
-  topology PlatformReference {
+  topology ReferenceDeployment {
 
     # ----------------------------------------------------------------------
     # Instances used in the topology
@@ -133,7 +133,7 @@ module PlatformReference {
       fileUplink.bufferSendOut -> bufferManager.bufferSendIn
     }
 
-    connections PlatformReference {
+    connections ReferenceDeployment {
       # Add here connections to user-defined components
     }
 

@@ -1,17 +1,17 @@
 // ======================================================================
-// \title  PlatformReferenceTopology.hpp
+// \title  ReferenceDeploymentTopology.hpp
 // \brief header file containing the topology instantiation definitions
 //
 // ======================================================================
 #ifndef PLATFORMREFERENCE_PLATFORMREFERENCETOPOLOGY_HPP
 #define PLATFORMREFERENCE_PLATFORMREFERENCETOPOLOGY_HPP
-// Included for access to PlatformReference::TopologyState and PlatformReference::ConfigObjects::pingEntries. These definitions are required by the
+// Included for access to ReferenceDeployment::TopologyState and ReferenceDeployment::ConfigObjects::pingEntries. These definitions are required by the
 // autocoder, but are also used in this hand-coded topology.
-#include <PlatformReference/Top/PlatformReferenceTopologyDefs.hpp>
+#include <ReferenceDeployment/Top/ReferenceDeploymentTopologyDefs.hpp>
 
-// Remove unnecessary PlatformReference:: qualifications
-using namespace PlatformReference;
-namespace PlatformReference {
+// Remove unnecessary ReferenceDeployment:: qualifications
+using namespace ReferenceDeployment;
+namespace ReferenceDeployment {
 /**
  * \brief initialize and run the F´ topology
  *
@@ -32,7 +32,7 @@ namespace PlatformReference {
  * custom tasks often start radio communication it is convenient to start them last.
  *
  * The state argument carries command line inputs used to setup the topology. For an explanation of the required type
- * PlatformReference::TopologyState see: PlatformReferenceTopologyDefs.hpp.
+ * ReferenceDeployment::TopologyState see: ReferenceDeploymentTopologyDefs.hpp.
  *
  * \param state: object shuttling CLI arguments (e.g. hostname/port, or UART baudrate) needed to construct the topology
  */
@@ -53,7 +53,7 @@ void setupTopology(const TopologyState& state);
  * Step 1, 2, 3, and 4 must occur in-order as the tasks must be stopped before being joined. These tasks must be stopped
  * and joined before any active resources may be deallocated.
  *
- * For an explanation of the required type PlatformReference::TopologyState see: PlatformReferenceTopologyDefs.hpp.
+ * For an explanation of the required type ReferenceDeployment::TopologyState see: ReferenceDeploymentTopologyDefs.hpp.
  *
  * \param state: state object provided to setupTopology
  */
@@ -82,5 +82,5 @@ void startSimulatedCycle(Fw::TimeInterval interval = Fw::TimeInterval(1,0));
  */
 void stopSimulatedCycle();
 
-} // namespace PlatformReference
+} // namespace ReferenceDeployment
 #endif
