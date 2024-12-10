@@ -109,7 +109,7 @@ module ReferenceDeployment {
 
   instance bufferManager: Svc.BufferManager base id 0x4400
 
-  instance posixTime: Svc.PosixTime base id 0x4500
+  instance posixTime: Svc.ChronoTime base id 0x4500
 
   instance rateGroupDriver: Svc.RateGroupDriver base id 0x4600
 

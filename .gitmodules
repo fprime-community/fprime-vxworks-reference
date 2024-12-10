@@ -1,6 +1,10 @@
 [submodule "fprime"]
 	path = lib/fprime
 	url = https://github.com/nasa/fprime.git
+	# Branch used with checking out using --remote. Used for nightly CI builds.
+	branch = devel
 [submodule "lib/fprime-vxworks"]
 	path = lib/fprime-vxworks
 	url = https://github.com/fprime-community/fprime-vxworks
+	# Branch used with checking out using --remote. Used for nightly CI builds.
+	branch = devel
