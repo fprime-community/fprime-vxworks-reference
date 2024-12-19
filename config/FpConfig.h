@@ -404,10 +404,6 @@ typedef FwIndexType FwQueueSizeType;
 #define FW_MUTEX_HANDLE_MAX_SIZE 100 //!< Maximum size of a handle for OS queues
 #endif
 
-#ifndef FW_QUEUE_HANDLE_MAX_SIZE
-#define FW_QUEUE_HANDLE_MAX_SIZE 400  //!< Maximum size of a handle for OS queues
-#endif
-
 #ifndef FW_DIRECTORY_HANDLE_MAX_SIZE
 #define FW_DIRECTORY_HANDLE_MAX_SIZE 16  //!< Maximum size of a handle for OS resources (files, queues, locks, etc.)
 #endif
@@ -426,6 +422,11 @@ typedef FwIndexType FwQueueSizeType;
 
 #ifndef FW_CONDITION_VARIABLE_HANDLE_MAX_SIZE
 #define FW_CONDITION_VARIABLE_HANDLE_MAX_SIZE 80  //!< Maximum size of a handle for OS condition variables
+#endif
+
+
+#ifndef FW_QUEUE_HANDLE_MAX_SIZE
+#define FW_QUEUE_HANDLE_MAX_SIZE (2 * FW_CONDITION_VARIABLE_HANDLE_MAX_SIZE + FW_MUTEX_HANDLE_MAX_SIZE + 200)  //!< Maximum size of a handle for OS queues
 #endif
 
 #ifndef FW_CPU_HANDLE_MAX_SIZE
