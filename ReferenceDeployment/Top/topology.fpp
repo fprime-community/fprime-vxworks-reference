@@ -33,7 +33,7 @@ module ReferenceDeployment {
     instance fileUplink
     instance bufferManager
     instance framer
-    instance posixTime
+    instance chronoTime
     instance prmDb
     instance rateGroup1
     instance rateGroup2
@@ -56,7 +56,7 @@ module ReferenceDeployment {
 
     text event connections instance textLogger
 
-    time connections instance posixTime
+    time connections instance chronoTime
 
     health connections instance $health
 

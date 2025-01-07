@@ -14,7 +14,6 @@ set(SOURCE_FILES
 )
 set(MOD_DEPS
   Fw/Logger
-  Svc/PosixTime
   # Communication Implementations
   Drv/Udp
   Drv/TcpServer
