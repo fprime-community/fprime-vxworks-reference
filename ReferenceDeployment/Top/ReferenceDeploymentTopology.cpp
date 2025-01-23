@@ -6,7 +6,7 @@
 // Provides access to autocoded functions
 #include <ReferenceDeployment/Top/ReferenceDeploymentTopologyAc.hpp>
 // Note: Uncomment when using Svc:TlmPacketizer
-//#include <ReferenceDeployment/Top/ReferenceDeploymentPacketsAc.hpp>
+// #include <ReferenceDeployment/Top/ReferenceDeploymentPacketsAc.hpp>
 
 // Necessary project-specified types
 #include <Fw/Types/MallocAllocator.hpp>
@@ -46,9 +46,10 @@ enum TopologyConstants {
     FILE_DOWNLINK_CYCLE_TIME = 1000,
     FILE_DOWNLINK_FILE_QUEUE_DEPTH = 10,
     HEALTH_WATCHDOG_CODE = 0x123,
-    COMM_PRIORITY = 100,
+    COMM_PRIORITY = 49,
     // bufferManager constants
-    FRAMER_BUFFER_SIZE = FW_MAX(FW_COM_BUFFER_MAX_SIZE, FW_FILE_BUFFER_MAX_SIZE + sizeof(U32)) + HASH_DIGEST_LENGTH + Svc::FpFrameHeader::SIZE,
+    FRAMER_BUFFER_SIZE = FW_MAX(FW_COM_BUFFER_MAX_SIZE, FW_FILE_BUFFER_MAX_SIZE + sizeof(U32)) + HASH_DIGEST_LENGTH +
+                         Svc::FpFrameHeader::SIZE,
     FRAMER_BUFFER_COUNT = 30,
     DEFRAMER_BUFFER_SIZE = FW_MAX(FW_COM_BUFFER_MAX_SIZE, FW_FILE_BUFFER_MAX_SIZE + sizeof(U32)),
     DEFRAMER_BUFFER_COUNT = 30,
@@ -63,14 +64,21 @@ Svc::Health::PingEntry pingEntries[] = {
     {PingEntries::ReferenceDeployment_tlmSend::WARN, PingEntries::ReferenceDeployment_tlmSend::FATAL, "chanTlm"},
     {PingEntries::ReferenceDeployment_cmdDisp::WARN, PingEntries::ReferenceDeployment_cmdDisp::FATAL, "cmdDisp"},
     {PingEntries::ReferenceDeployment_cmdSeq::WARN, PingEntries::ReferenceDeployment_cmdSeq::FATAL, "cmdSeq"},
-    {PingEntries::ReferenceDeployment_eventLogger::WARN, PingEntries::ReferenceDeployment_eventLogger::FATAL, "eventLogger"},
-    {PingEntries::ReferenceDeployment_fileDownlink::WARN, PingEntries::ReferenceDeployment_fileDownlink::FATAL, "fileDownlink"},
-    {PingEntries::ReferenceDeployment_fileManager::WARN, PingEntries::ReferenceDeployment_fileManager::FATAL, "fileManager"},
-    {PingEntries::ReferenceDeployment_fileUplink::WARN, PingEntries::ReferenceDeployment_fileUplink::FATAL, "fileUplink"},
+    {PingEntries::ReferenceDeployment_eventLogger::WARN, PingEntries::ReferenceDeployment_eventLogger::FATAL,
+     "eventLogger"},
+    {PingEntries::ReferenceDeployment_fileDownlink::WARN, PingEntries::ReferenceDeployment_fileDownlink::FATAL,
+     "fileDownlink"},
+    {PingEntries::ReferenceDeployment_fileManager::WARN, PingEntries::ReferenceDeployment_fileManager::FATAL,
+     "fileManager"},
+    {PingEntries::ReferenceDeployment_fileUplink::WARN, PingEntries::ReferenceDeployment_fileUplink::FATAL,
+     "fileUplink"},
     {PingEntries::ReferenceDeployment_prmDb::WARN, PingEntries::ReferenceDeployment_prmDb::FATAL, "prmDb"},
-    {PingEntries::ReferenceDeployment_rateGroup1::WARN, PingEntries::ReferenceDeployment_rateGroup1::FATAL, "rateGroup1"},
-    {PingEntries::ReferenceDeployment_rateGroup2::WARN, PingEntries::ReferenceDeployment_rateGroup2::FATAL, "rateGroup2"},
-    {PingEntries::ReferenceDeployment_rateGroup3::WARN, PingEntries::ReferenceDeployment_rateGroup3::FATAL, "rateGroup3"},
+    {PingEntries::ReferenceDeployment_rateGroup1::WARN, PingEntries::ReferenceDeployment_rateGroup1::FATAL,
+     "rateGroup1"},
+    {PingEntries::ReferenceDeployment_rateGroup2::WARN, PingEntries::ReferenceDeployment_rateGroup2::FATAL,
+     "rateGroup2"},
+    {PingEntries::ReferenceDeployment_rateGroup3::WARN, PingEntries::ReferenceDeployment_rateGroup3::FATAL,
+     "rateGroup3"},
 };
 
 /**
