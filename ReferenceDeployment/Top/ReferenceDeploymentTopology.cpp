@@ -185,6 +185,15 @@ void startSimulatedCycle(Fw::TimeInterval interval) {
     }
 }
 
+extern "C" {
+void stopTimer() {
+    ReferenceDeployment::watchdogTimer.stopWatchdog();
+    cycleLock.lock();
+    cycleFlag = false;
+    cycleLock.unLock();
+}
+}
+
 void stopSimulatedCycle() {
     cycleLock.lock();
     cycleFlag = false;
