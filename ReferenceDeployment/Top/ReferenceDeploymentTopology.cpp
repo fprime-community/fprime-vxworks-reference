@@ -188,6 +188,7 @@ void startSimulatedCycle(Fw::TimeInterval interval) {
     static constexpr U32 USECS_PER_SECS = 1000000;
     U32 delayInUsecs = (interval.getSeconds() * USECS_PER_SECS) + interval.getUSeconds();
     // Calculate ticks per interval by multiplying interval by number of ticks per second, then round up.
+    static_assert(USECS_PER_SECS != 0, "This constant cannot be 0.");
     U32 ticksPerInterval = (((delayInUsecs * sysClkRateGet()) + (USECS_PER_SECS - 1)) / USECS_PER_SECS);
     STATUS status = wdStart(watchdogId, ticksPerInterval, reinterpret_cast<FUNCPTR>(myIsr), ticksPerInterval);
     while (cycling) {
