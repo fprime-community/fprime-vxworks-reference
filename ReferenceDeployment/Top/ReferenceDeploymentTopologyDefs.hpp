@@ -6,7 +6,6 @@
 #ifndef PLATFORMREFERENCE_PLATFORMREFERENCETOPOLOGYDEFS_HPP
 #define PLATFORMREFERENCE_PLATFORMREFERENCETOPOLOGYDEFS_HPP
 
-#include "Drv/BlockDriver/BlockDriver.hpp"
 #include "Fw/Types/MallocAllocator.hpp"
 #include "ReferenceDeployment/Top/FppConstantsAc.hpp"
 #include "Svc/FramingProtocol/FprimeProtocol.hpp"
