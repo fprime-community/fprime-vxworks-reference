@@ -25,8 +25,7 @@ class WdBlockDriver : public WdBlockDriverComponentBase {
     //! Destroy WdBlockDriver object
     ~WdBlockDriver();
 
-    // a little hack to get the reference running
-    void callIsr(FwSizeType ticks);
+    void callIsr(U32 ticks);
 
     PRIVATE :
         // ----------------------------------------------------------------------
@@ -75,7 +74,7 @@ class WdBlockDriver : public WdBlockDriverComponentBase {
     // ----------------------------------------------------------------------
     WDOG_ID m_watchdogId = nullptr;
     U32 m_cycles = 0;
-    FwSizeType m_tickDelay = 0;
+    U32 m_tickDelay = 0;
 };
 
 }  // namespace Components

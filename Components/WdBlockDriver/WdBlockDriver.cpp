@@ -16,9 +16,14 @@ WdBlockDriver ::WdBlockDriver(const char* const compName) : WdBlockDriverCompone
     m_watchdogId = wdCreate();
 }
 
-WdBlockDriver ::~WdBlockDriver() {}
+WdBlockDriver ::~WdBlockDriver() {
+    if (m_watchdogId != nullptr) {
+        (void)wdCancel(m_watchdogId);
+        (void)wdDelete(m_watchdogId);
+    }
+}
 
-void WdBlockDriver::callIsr(FwSizeType ticks) {
+void WdBlockDriver::callIsr(U32 ticks) {
     this->m_tickDelay = ticks;
     s_driverISR(this);
 }
