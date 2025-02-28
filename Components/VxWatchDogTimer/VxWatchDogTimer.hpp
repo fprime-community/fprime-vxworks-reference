@@ -1,29 +1,29 @@
 // ======================================================================
-// \title  WdBlockDriver.hpp
+// \title  VxWatchDogTimer.hpp
 // \author ortega
-// \brief  hpp file for WdBlockDriver component implementation class
+// \brief  hpp file for VxWatchDogTimer component implementation class
 // ======================================================================
 
-#ifndef Components_WdBlockDriver_HPP
-#define Components_WdBlockDriver_HPP
+#ifndef Components_VxWatchDogTimer_HPP
+#define Components_VxWatchDogTimer_HPP
 
 #include <wdLib.h>
-#include "Components/WdBlockDriver/WdBlockDriverComponentAc.hpp"
+#include "Components/VxWatchDogTimer/VxWatchDogTimerComponentAc.hpp"
 
 namespace Components {
 
-class WdBlockDriver : public WdBlockDriverComponentBase {
+class VxWatchDogTimer : public VxWatchDogTimerComponentBase {
   public:
     // ----------------------------------------------------------------------
     // Component construction and destruction
     // ----------------------------------------------------------------------
 
-    //! Construct WdBlockDriver object
-    WdBlockDriver(const char* const compName  //!< The component name
+    //! Construct VxWatchDogTimer object
+    VxWatchDogTimer(const char* const compName  //!< The component name
     );
 
-    //! Destroy WdBlockDriver object
-    ~WdBlockDriver();
+    //! Destroy VxWatchDogTimer object
+    ~VxWatchDogTimer();
 
     void callIsr(U32 ticks);
 

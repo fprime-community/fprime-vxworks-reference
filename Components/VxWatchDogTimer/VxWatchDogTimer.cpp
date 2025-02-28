@@ -1,10 +1,10 @@
 // ======================================================================
-// \title  WdBlockDriver.cpp
+// \title  VxWatchDogTimer.cpp
 // \author ortega
-// \brief  cpp file for WdBlockDriver component implementation class
+// \brief  cpp file for VxWatchDogTimer component implementation class
 // ======================================================================
 
-#include "Components/WdBlockDriver/WdBlockDriver.hpp"
+#include "Components/VxWatchDogTimer/VxWatchDogTimer.hpp"
 
 namespace Components {
 
@@ -12,26 +12,26 @@ namespace Components {
 // Component construction and destruction
 // ----------------------------------------------------------------------
 
-WdBlockDriver ::WdBlockDriver(const char* const compName) : WdBlockDriverComponentBase(compName) {
+VxWatchDogTimer ::VxWatchDogTimer(const char* const compName) : VxWatchDogTimerComponentBase(compName) {
     m_watchdogId = wdCreate();
 }
 
-WdBlockDriver ::~WdBlockDriver() {
+VxWatchDogTimer ::~VxWatchDogTimer() {
     if (m_watchdogId != nullptr) {
         (void)wdCancel(m_watchdogId);
         (void)wdDelete(m_watchdogId);
     }
 }
 
-void WdBlockDriver::callIsr(U32 ticks) {
+void VxWatchDogTimer::callIsr(U32 ticks) {
     this->m_tickDelay = ticks;
     s_driverISR(this);
 }
 
-void WdBlockDriver::s_driverISR(void* arg) {
+void VxWatchDogTimer::s_driverISR(void* arg) {
     FW_ASSERT(arg);
     // cast argument to component instance
-    WdBlockDriver* compPtr = static_cast<WdBlockDriver*>(arg);
+    VxWatchDogTimer* compPtr = static_cast<VxWatchDogTimer*>(arg);
     compPtr->InterruptReport_internalInterfaceInvoke(0);
     FW_ASSERT(compPtr->m_watchdogId != nullptr);
     STATUS status = wdStart(compPtr->m_watchdogId, compPtr->m_tickDelay, reinterpret_cast<FUNCPTR>(s_driverISR),
@@ -42,30 +42,30 @@ void WdBlockDriver::s_driverISR(void* arg) {
 // Handler implementations for typed input ports
 // ----------------------------------------------------------------------
 
-void WdBlockDriver ::BufferIn_handler(FwIndexType portNum, Drv::DataBuffer& buff) {
+void VxWatchDogTimer ::BufferIn_handler(FwIndexType portNum, Drv::DataBuffer& buff) {
     // just a pass-through
     this->BufferOut_out(0, buff);
 }
 
-void WdBlockDriver ::PingIn_handler(FwIndexType portNum, U32 key) {
+void VxWatchDogTimer ::PingIn_handler(FwIndexType portNum, U32 key) {
     // call ping output port
     this->PingOut_out(0, key);
 }
 
-void WdBlockDriver ::Sched_handler(FwIndexType portNum, U32 context) {}
+void VxWatchDogTimer ::Sched_handler(FwIndexType portNum, U32 context) {}
 
 // ----------------------------------------------------------------------
 // Handler implementations for user-defined internal interfaces
 // ----------------------------------------------------------------------
 
-void WdBlockDriver ::InterruptReport_internalInterfaceHandler(U32 interrupt) {
+void VxWatchDogTimer ::InterruptReport_internalInterfaceHandler(U32 interrupt) {
     // get time
     Os::RawTime time;
     time.now();
     // call output timing signal
     this->CycleOut_out(0, time);
     // increment cycles and write channel
-    this->tlmWrite_BD_Cycles(this->m_cycles);
+    this->tlmWrite_Cycles(this->m_cycles);
     this->m_cycles++;
 }
 

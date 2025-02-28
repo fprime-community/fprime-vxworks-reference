@@ -1,6 +1,6 @@
 module Components {
-    @ VxWorks interrupt-based block driver
-    active component WdBlockDriver {
+    @ VxWorks WatchDog Timer
+    active component VxWatchDogTimer {
 
     # ----------------------------------------------------------------------
     # General ports

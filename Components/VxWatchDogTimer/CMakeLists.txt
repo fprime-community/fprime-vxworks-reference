@@ -12,8 +12,8 @@
 restrict_platforms(vxworks)
 
 set(SOURCE_FILES
-  "${CMAKE_CURRENT_LIST_DIR}/WdBlockDriver.fpp"
-  "${CMAKE_CURRENT_LIST_DIR}/WdBlockDriver.cpp"
+  "${CMAKE_CURRENT_LIST_DIR}/VxWatchDogTimer.fpp"
+  "${CMAKE_CURRENT_LIST_DIR}/VxWatchDogTimer.cpp"
 )
 
 # Uncomment and add any modules that this component depends on, else
@@ -33,9 +33,9 @@ register_fprime_module()
 
 ### Unit Tests ###
 # set(UT_SOURCE_FILES
-#   "${CMAKE_CURRENT_LIST_DIR}/WdBlockDriver.fpp"
-#   "${CMAKE_CURRENT_LIST_DIR}/test/ut/WdBlockDriverTestMain.cpp"
-#   "${CMAKE_CURRENT_LIST_DIR}/test/ut/WdBlockDriverTester.cpp"
+#   "${CMAKE_CURRENT_LIST_DIR}/VxWatchDogTimer.fpp"
+#   "${CMAKE_CURRENT_LIST_DIR}/test/ut/VxWatchDogTimerTestMain.cpp"
+#   "${CMAKE_CURRENT_LIST_DIR}/test/ut/VxWatchDogTimerTester.cpp"
 # )
 # set(UT_MOD_DEPS
 #   STest

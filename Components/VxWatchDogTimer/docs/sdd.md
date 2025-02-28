@@ -1,6 +1,6 @@
-# Components::WdBlockDriver
+# Components::VxWatchDogTimer
 
-VxWorks interrupt-based block driver
+VxWorks WatchDog Timer
 
 ## Usage Examples
 Add usage examples here
