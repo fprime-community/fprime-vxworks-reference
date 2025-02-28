@@ -13,8 +13,6 @@
 #include <Svc/FramingProtocol/FprimeProtocol.hpp>
 
 // Used for 1Hz cycling
-#include <sysLib.h>
-#include <wdLib.h>
 #include <Os/Mutex.hpp>
 
 // Allows easy reference to objects in FPP/autocoder required namespaces
@@ -172,34 +170,19 @@ void setupTopology(const TopologyState& state) {
 Os::Mutex cycleLock;
 volatile bool cycleFlag = true;
 
-void myIsr(U32 ticks) {
-    ReferenceDeployment::watchdogTimer.callIsr(ticks);
-}
-
 void startSimulatedCycle(Fw::TimeInterval interval) {
     cycleLock.lock();
     bool cycling = cycleFlag;
     cycleLock.unLock();
 
     // Main loop
-    WDOG_ID watchdogId = wdCreate();
-    FW_ASSERT(watchdogId != nullptr);
-    static constexpr U32 USECS_PER_SECS = 1000000;
-    U32 delayInUsecs = (interval.getSeconds() * USECS_PER_SECS) + interval.getUSeconds();
-    // Calculate ticks per interval by multiplying interval by number of ticks per second, then round up.
-    static_assert(USECS_PER_SECS != 0, "This constant cannot be 0.");
-    U32 ticksPerInterval = (((delayInUsecs * sysClkRateGet()) + (USECS_PER_SECS - 1)) / USECS_PER_SECS);
-    STATUS status = wdStart(watchdogId, ticksPerInterval, reinterpret_cast<FUNCPTR>(myIsr), ticksPerInterval);
+    ReferenceDeployment::watchdogTimer.startWatchdog(interval);
     while (cycling) {
         Os::Task::delay(interval);
         cycleLock.lock();
         cycling = cycleFlag;
         cycleLock.unLock();
     }
-
-    // clean up
-    (void)wdCancel(watchdogId);
-    (void)wdDelete(watchdogId);
 }
 
 void stopSimulatedCycle() {
