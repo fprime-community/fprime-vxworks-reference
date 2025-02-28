@@ -62,7 +62,6 @@ enum TopologyConstants {
 
 // Ping entries are autocoded, however; this code is not properly exported. Thus, it is copied here.
 Svc::Health::PingEntry pingEntries[] = {
-    {PingEntries::ReferenceDeployment_blockDrv::WARN, PingEntries::ReferenceDeployment_blockDrv::FATAL, "blockDrv"},
     {PingEntries::ReferenceDeployment_tlmSend::WARN, PingEntries::ReferenceDeployment_tlmSend::FATAL, "chanTlm"},
     {PingEntries::ReferenceDeployment_cmdDisp::WARN, PingEntries::ReferenceDeployment_cmdDisp::FATAL, "cmdDisp"},
     {PingEntries::ReferenceDeployment_cmdSeq::WARN, PingEntries::ReferenceDeployment_cmdSeq::FATAL, "cmdSeq"},
@@ -174,7 +173,7 @@ Os::Mutex cycleLock;
 volatile bool cycleFlag = true;
 
 void myIsr(U32 ticks) {
-    ReferenceDeployment::blockDrv.callIsr(ticks);
+    ReferenceDeployment::watchdogTimer.callIsr(ticks);
 }
 
 void startSimulatedCycle(Fw::TimeInterval interval) {

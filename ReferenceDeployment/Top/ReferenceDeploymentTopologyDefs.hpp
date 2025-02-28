@@ -17,9 +17,10 @@ namespace ReferenceDeployment {
 /**
  * \brief required type definition to carry state
  *
- * The topology autocoder requires an object that carries state with the name `ReferenceDeployment::TopologyState`. Only the type
- * definition is required by the autocoder and the contents of this object are otherwise opaque to the autocoder. The contents are entirely up
- * to the definition of the project. Here, they are derived from command line inputs.
+ * The topology autocoder requires an object that carries state with the name `ReferenceDeployment::TopologyState`. Only
+ * the type definition is required by the autocoder and the contents of this object are otherwise opaque to the
+ * autocoder. The contents are entirely up to the definition of the project. Here, they are derived from command line
+ * inputs.
  */
 struct TopologyState {
     const CHAR* hostname;
@@ -46,9 +47,6 @@ struct TopologyState {
  * ```
  */
 namespace PingEntries {
-namespace ReferenceDeployment_blockDrv {
-enum { WARN = 3, FATAL = 5 };
-}
 namespace ReferenceDeployment_tlmSend {
 enum { WARN = 3, FATAL = 5 };
 }
