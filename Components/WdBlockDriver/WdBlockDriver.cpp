@@ -18,7 +18,8 @@ WdBlockDriver ::WdBlockDriver(const char* const compName) : WdBlockDriverCompone
 
 WdBlockDriver ::~WdBlockDriver() {}
 
-void WdBlockDriver::callIsr() {
+void WdBlockDriver::callIsr(FwSizeType ticks) {
+    this->m_tickDelay = ticks;
     s_driverISR(this);
 }
 
@@ -28,7 +29,7 @@ void WdBlockDriver::s_driverISR(void* arg) {
     WdBlockDriver* compPtr = static_cast<WdBlockDriver*>(arg);
     compPtr->InterruptReport_internalInterfaceInvoke(0);
     FW_ASSERT(compPtr->m_watchdogId != nullptr);
-    STATUS status = wdStart(compPtr->m_watchdogId, 60, reinterpret_cast<FUNCPTR>(s_driverISR),
+    STATUS status = wdStart(compPtr->m_watchdogId, compPtr->m_tickDelay, reinterpret_cast<FUNCPTR>(s_driverISR),
                             reinterpret_cast<_Vx_usr_arg_t>(compPtr));
     FW_ASSERT(status == VXWORKS_OK);
 }
