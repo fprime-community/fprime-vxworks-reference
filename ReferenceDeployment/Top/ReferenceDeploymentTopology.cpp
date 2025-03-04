@@ -170,13 +170,15 @@ void setupTopology(const TopologyState& state) {
 Os::Mutex cycleLock;
 volatile bool cycleFlag = true;
 
-void startSimulatedCycle(Fw::TimeInterval interval) {
+void startTimer(Fw::TimeInterval interval) {
     cycleLock.lock();
     bool cycling = cycleFlag;
     cycleLock.unLock();
 
     // Main loop
     ReferenceDeployment::watchdogTimer.startWatchdog(interval);
+
+    // Keep FSW running
     while (cycling) {
         Os::Task::delay(interval);
         cycleLock.lock();
@@ -192,12 +194,6 @@ void stopTimer() {
     cycleFlag = false;
     cycleLock.unLock();
 }
-}
-
-void stopSimulatedCycle() {
-    cycleLock.lock();
-    cycleFlag = false;
-    cycleLock.unLock();
 }
 
 void teardownTopology(const TopologyState& state) {

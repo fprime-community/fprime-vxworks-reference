@@ -5,8 +5,8 @@
 // ======================================================================
 #ifndef PLATFORMREFERENCE_PLATFORMREFERENCETOPOLOGY_HPP
 #define PLATFORMREFERENCE_PLATFORMREFERENCETOPOLOGY_HPP
-// Included for access to ReferenceDeployment::TopologyState and ReferenceDeployment::ConfigObjects::pingEntries. These definitions are required by the
-// autocoder, but are also used in this hand-coded topology.
+// Included for access to ReferenceDeployment::TopologyState and ReferenceDeployment::ConfigObjects::pingEntries. These
+// definitions are required by the autocoder, but are also used in this hand-coded topology.
 #include <ReferenceDeployment/Top/ReferenceDeploymentTopologyDefs.hpp>
 
 // Remove unnecessary ReferenceDeployment:: qualifications
@@ -60,27 +60,20 @@ void setupTopology(const TopologyState& state);
 void teardownTopology(const TopologyState& state);
 
 /**
- * \brief cycle the rate group driver at a crude rate
+ * \brief start a timer at the specified interval
  *
- * The reference topology does not have a true 1Hz input clock for the rate group driver because it is designed to
- * operate across various computing endpoints (e.g. laptops) where a clear 1Hz source may not be easily and generically
- * achieved. This function mimics the cycling via a Task::delay(milliseconds) loop that manually invokes the ISR call
- * to the example block driver.
+ * This loop is started via a startTimer call.
  *
- * This loop is stopped via a startSimulatedCycle call.
- *
- * Note: projects should replace this with a component that produces an output port call at the appropriate frequency.
- *
- * \param milliseconds: milliseconds to delay for each cycle. Default: 1000 or 1Hz.
+ * \param interval: delay for each cycle. Default: 1Hz.
  */
-void startSimulatedCycle(Fw::TimeInterval interval = Fw::TimeInterval(1,0));
+void startTimer(Fw::TimeInterval interval = Fw::TimeInterval(1, 0));
 
 /**
- * \brief stop the simulated cycle started by startSimulatedCycle
+ * \brief stop the rate group cycle started by startTimer
  *
- * This stops the cycle started by startSimulatedCycle.
+ * This stops the timer started by startTimer.
  */
-void stopSimulatedCycle();
+void stopTimer();
 
-} // namespace ReferenceDeployment
+}  // namespace ReferenceDeployment
 #endif
