@@ -12,7 +12,7 @@
 #include <Fw/Types/MallocAllocator.hpp>
 #include <Svc/FramingProtocol/FprimeProtocol.hpp>
 
-// Used for 1Hz synthetic cycling
+// Used for 1Hz cycling
 #include <Os/Mutex.hpp>
 
 // Allows easy reference to objects in FPP/autocoder required namespaces
@@ -60,7 +60,6 @@ enum TopologyConstants {
 
 // Ping entries are autocoded, however; this code is not properly exported. Thus, it is copied here.
 Svc::Health::PingEntry pingEntries[] = {
-    {PingEntries::ReferenceDeployment_blockDrv::WARN, PingEntries::ReferenceDeployment_blockDrv::FATAL, "blockDrv"},
     {PingEntries::ReferenceDeployment_tlmSend::WARN, PingEntries::ReferenceDeployment_tlmSend::FATAL, "chanTlm"},
     {PingEntries::ReferenceDeployment_cmdDisp::WARN, PingEntries::ReferenceDeployment_cmdDisp::FATAL, "cmdDisp"},
     {PingEntries::ReferenceDeployment_cmdSeq::WARN, PingEntries::ReferenceDeployment_cmdSeq::FATAL, "cmdSeq"},
@@ -171,26 +170,30 @@ void setupTopology(const TopologyState& state) {
 Os::Mutex cycleLock;
 volatile bool cycleFlag = true;
 
-void startSimulatedCycle(Fw::TimeInterval interval) {
+void startTimer(Fw::TimeInterval interval) {
     cycleLock.lock();
     bool cycling = cycleFlag;
     cycleLock.unLock();
 
     // Main loop
-    while (cycling) {
-        ReferenceDeployment::blockDrv.callIsr();
-        Os::Task::delay(interval);
+    ReferenceDeployment::watchdogTimer.startWatchdog(interval);
 
+    // Keep FSW running
+    while (cycling) {
+        Os::Task::delay(interval);
         cycleLock.lock();
         cycling = cycleFlag;
         cycleLock.unLock();
     }
 }
 
-void stopSimulatedCycle() {
+extern "C" {
+void stopTimer() {
+    ReferenceDeployment::watchdogTimer.stopWatchdog();
     cycleLock.lock();
     cycleFlag = false;
     cycleLock.unLock();
+}
 }
 
 void teardownTopology(const TopologyState& state) {

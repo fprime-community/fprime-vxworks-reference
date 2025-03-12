@@ -9,11 +9,11 @@
 #include <Os/Os.hpp>
 
 // \brief main entry point for the VxWorks reference
-//  
+//
 // This function is the entry point that can be dynamically loaded or jumped to from the VxWorks operating system. It
 // requires two arguments to be passed in: the hostname and the port number. These are used to connect to the reference
 // to the fprime GDS.
-// 
+//
 // This function willl setup the topology, run the simulated cycle, and then teardown the topology when the cycle ends.
 // The OSAL layer is initialized at the beginning of the function.
 //
@@ -28,7 +28,7 @@ void fsw_main(char* address, U16 port) {
 
     // Setup, cycle, and teardown topology
     ReferenceDeployment::setupTopology(inputs);
-    ReferenceDeployment::startSimulatedCycle(Fw::TimeInterval(1,0));  // Program loop cycling rate groups at 1Hz
+    ReferenceDeployment::startTimer(Fw::TimeInterval(1, 0));  // Program loop cycling rate groups at 1Hz
     ReferenceDeployment::teardownTopology(inputs);
 }
 
@@ -55,4 +55,3 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 #endif
-

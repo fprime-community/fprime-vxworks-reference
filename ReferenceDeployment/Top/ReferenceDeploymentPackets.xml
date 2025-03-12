@@ -37,10 +37,6 @@
         <channel name="fileManager.Errors"/>
     </packet>
 
-    <packet name="DriveTlm" id="3" level="1">
-        <channel name="blockDrv.BD_Cycles"/>
-    </packet>
-
     <packet name="Comms" id="4" level="1">
         <channel name="comQueue.comQueueDepth"/>
         <channel name="comQueue.buffQueueDepth"/>
