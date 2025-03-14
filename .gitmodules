@@ -5,6 +5,6 @@
 	branch = devel
 [submodule "lib/fprime-vxworks"]
 	path = lib/fprime-vxworks
-	url = https://github.com/fprime-community/fprime-vxworks
+	url = https://github.com/NhatNguyen/fprime-vxworks.git
 	# Branch used with checking out using --remote. Used for nightly CI builds.
-	branch = devel
+	branch = fprime-3331
