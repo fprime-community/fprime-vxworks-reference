@@ -116,6 +116,6 @@ module ReferenceDeployment {
 
   instance comStub: Svc.ComStub base id 0x4B00
 
-  instance watchdogTimer: Components.VxWatchDogTimer base id 0x4C00
+  instance watchdogTimer: VxWorksSvc.VxWatchDogTimer base id 0x4C00
 
 }
