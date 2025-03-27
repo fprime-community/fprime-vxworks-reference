@@ -8,3 +8,6 @@
 	url = https://github.com/fprime-community/fprime-vxworks
 	# Branch used with checking out using --remote. Used for nightly CI builds.
 	branch = devel
+[submodule "lib/fprime-baremetal"]
+	path = lib/fprime-baremetal
+	url = git@github.com:fprime-community/fprime-baremetal.git
