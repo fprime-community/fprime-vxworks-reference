@@ -15,6 +15,8 @@
 // Used for 1Hz cycling
 #include <Os/Mutex.hpp>
 
+#include <fprime-baremetal/Os/Baremetal/MicroFs/MicroFs.hpp>
+
 // Allows easy reference to objects in FPP/autocoder required namespaces
 using namespace ReferenceDeployment;
 
@@ -88,6 +90,16 @@ Svc::Health::PingEntry pingEntries[] = {
  * desired, but is extracted here for clarity.
  */
 void configureTopology() {
+    // Initialize the RAM File system
+    Os::Baremetal::MicroFs::MicroFsConfig microFsCfg;
+    Os::Baremetal::MicroFs::MicroFsSetCfgBins(microFsCfg, 5);
+    Os::Baremetal::MicroFs::MicroFsAddBin(microFsCfg, 0, 1 * 1024, 5);
+    Os::Baremetal::MicroFs::MicroFsAddBin(microFsCfg, 1, 10 * 1024, 5);
+    Os::Baremetal::MicroFs::MicroFsAddBin(microFsCfg, 2, 100 * 1024, 5);
+    Os::Baremetal::MicroFs::MicroFsAddBin(microFsCfg, 3, 1000 * 1024, 5);
+    Os::Baremetal::MicroFs::MicroFsAddBin(microFsCfg, 4, 10000 * 1024, 5);
+    Os::Baremetal::MicroFs::MicroFsInit(microFsCfg, 0, mallocator);
+
     // Buffer managers need a configured set of buckets and an allocator used to allocate memory for those buckets.
     Svc::BufferManager::BufferBins upBuffMgrBins;
     memset(&upBuffMgrBins, 0, sizeof(upBuffMgrBins));
@@ -119,7 +131,7 @@ void configureTopology() {
                            FILE_DOWNLINK_FILE_QUEUE_DEPTH);
 
     // Parameter database is configured with a database file name, and that file must be initially read.
-    prmDb.configure("PrmDb.dat");
+    prmDb.configure("/bin4/file1");
     prmDb.readParamFile();
 
     // Health is supplied a set of ping entires.
