@@ -24,7 +24,9 @@ module ReferenceDeployment {
     instance comDriver
     instance comQueue
     instance comStub
+    instance fprimeRouter
     instance deframer
+    instance frameAccumulator
     instance eventLogger
     instance fatalAdapter
     instance fatalHandler
@@ -119,16 +121,19 @@ module ReferenceDeployment {
 
       comDriver.allocate -> bufferManager.bufferGetCallee
       comDriver.$recv -> comStub.drvDataIn
-      comStub.comDataOut -> deframer.framedIn
+      comStub.comDataOut -> frameAccumulator.dataIn
 
-      deframer.framedDeallocate -> bufferManager.bufferSendIn
-      deframer.comOut -> cmdDisp.seqCmdBuff
-
-      cmdDisp.seqCmdStatus -> deframer.cmdResponseIn
-
-      deframer.bufferAllocate -> bufferManager.bufferGetCallee
-      deframer.bufferOut -> fileUplink.bufferSendIn
+      frameAccumulator.bufferDeallocate -> bufferManager.bufferSendIn
+      frameAccumulator.bufferAllocate -> bufferManager.bufferGetCallee
+      frameAccumulator.frameOut -> deframer.framedIn
+      deframer.deframedOut -> fprimeRouter.dataIn
       deframer.bufferDeallocate -> bufferManager.bufferSendIn
+
+      fprimeRouter.commandOut -> cmdDisp.seqCmdBuff
+      fprimeRouter.fileOut -> fileUplink.bufferSendIn
+      fprimeRouter.bufferDeallocate -> bufferManager.bufferSendIn
+
+      cmdDisp.seqCmdStatus -> fprimeRouter.cmdResponseIn
       fileUplink.bufferSendOut -> bufferManager.bufferSendIn
     }
 
