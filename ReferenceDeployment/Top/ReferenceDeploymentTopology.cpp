@@ -10,7 +10,7 @@
 
 // Necessary project-specified types
 #include <Fw/Types/MallocAllocator.hpp>
-#include <Svc/FramingProtocol/FprimeProtocol.hpp>
+#include <Svc/FrameAccumulator/FrameDetector/FprimeFrameDetector.hpp>
 
 // Used for 1Hz cycling
 #include <Os/Mutex.hpp>
@@ -22,10 +22,8 @@ using namespace ReferenceDeployment;
 // initialization phase.
 Fw::MallocAllocator mallocator;
 
-// The reference topology uses the F´ packet protocol when communicating with the ground and therefore uses the F´
-// framing and deframing implementations.
-Svc::FprimeFraming framing;
-Svc::FprimeDeframing deframing;
+// FprimeFrameDetector is used to configure the FrameAccumulator to detect F Prime frames
+Svc::FrameDetectors::FprimeFrameDetector frameDetector;
 
 Svc::ComQueue::QueueConfigurationTable configurationTable;
 
@@ -34,9 +32,9 @@ Svc::RateGroupDriver::DividerSet rateGroupDivisorsSet{{{1, 0}, {2, 0}, {4, 0}}};
 
 // Rate groups may supply a context token to each of the attached children whose purpose is set by the project. The
 // reference topology sets each token to zero as these contexts are unused in this project.
-NATIVE_INT_TYPE rateGroup1Context[Svc::ActiveRateGroup::CONNECTION_COUNT_MAX] = {};
-NATIVE_INT_TYPE rateGroup2Context[Svc::ActiveRateGroup::CONNECTION_COUNT_MAX] = {};
-NATIVE_INT_TYPE rateGroup3Context[Svc::ActiveRateGroup::CONNECTION_COUNT_MAX] = {};
+U32 rateGroup1Context[Svc::ActiveRateGroup::CONNECTION_COUNT_MAX] = {};
+U32 rateGroup2Context[Svc::ActiveRateGroup::CONNECTION_COUNT_MAX] = {};
+U32 rateGroup3Context[Svc::ActiveRateGroup::CONNECTION_COUNT_MAX] = {};
 
 // A number of constants are needed for construction of the topology. These are specified here.
 enum TopologyConstants {
@@ -63,21 +61,14 @@ Svc::Health::PingEntry pingEntries[] = {
     {PingEntries::ReferenceDeployment_tlmSend::WARN, PingEntries::ReferenceDeployment_tlmSend::FATAL, "chanTlm"},
     {PingEntries::ReferenceDeployment_cmdDisp::WARN, PingEntries::ReferenceDeployment_cmdDisp::FATAL, "cmdDisp"},
     {PingEntries::ReferenceDeployment_cmdSeq::WARN, PingEntries::ReferenceDeployment_cmdSeq::FATAL, "cmdSeq"},
-    {PingEntries::ReferenceDeployment_eventLogger::WARN, PingEntries::ReferenceDeployment_eventLogger::FATAL,
-     "eventLogger"},
-    {PingEntries::ReferenceDeployment_fileDownlink::WARN, PingEntries::ReferenceDeployment_fileDownlink::FATAL,
-     "fileDownlink"},
-    {PingEntries::ReferenceDeployment_fileManager::WARN, PingEntries::ReferenceDeployment_fileManager::FATAL,
-     "fileManager"},
-    {PingEntries::ReferenceDeployment_fileUplink::WARN, PingEntries::ReferenceDeployment_fileUplink::FATAL,
-     "fileUplink"},
+    {PingEntries::ReferenceDeployment_eventLogger::WARN, PingEntries::ReferenceDeployment_eventLogger::FATAL, "eventLogger"},
+    {PingEntries::ReferenceDeployment_fileDownlink::WARN, PingEntries::ReferenceDeployment_fileDownlink::FATAL, "fileDownlink"},
+    {PingEntries::ReferenceDeployment_fileManager::WARN, PingEntries::ReferenceDeployment_fileManager::FATAL, "fileManager"},
+    {PingEntries::ReferenceDeployment_fileUplink::WARN, PingEntries::ReferenceDeployment_fileUplink::FATAL, "fileUplink"},
     {PingEntries::ReferenceDeployment_prmDb::WARN, PingEntries::ReferenceDeployment_prmDb::FATAL, "prmDb"},
-    {PingEntries::ReferenceDeployment_rateGroup1::WARN, PingEntries::ReferenceDeployment_rateGroup1::FATAL,
-     "rateGroup1"},
-    {PingEntries::ReferenceDeployment_rateGroup2::WARN, PingEntries::ReferenceDeployment_rateGroup2::FATAL,
-     "rateGroup2"},
-    {PingEntries::ReferenceDeployment_rateGroup3::WARN, PingEntries::ReferenceDeployment_rateGroup3::FATAL,
-     "rateGroup3"},
+    {PingEntries::ReferenceDeployment_rateGroup1::WARN, PingEntries::ReferenceDeployment_rateGroup1::FATAL, "rateGroup1"},
+    {PingEntries::ReferenceDeployment_rateGroup2::WARN, PingEntries::ReferenceDeployment_rateGroup2::FATAL, "rateGroup2"},
+    {PingEntries::ReferenceDeployment_rateGroup3::WARN, PingEntries::ReferenceDeployment_rateGroup3::FATAL, "rateGroup3"},
 };
 
 /**
@@ -87,21 +78,20 @@ Svc::Health::PingEntry pingEntries[] = {
  * allocating resources, passing-in arguments, etc. This function may be inlined into the topology setup function if
  * desired, but is extracted here for clarity.
  */
-void configureTopology() {
+void configureTopology(const TopologyState& state) {
     // Buffer managers need a configured set of buckets and an allocator used to allocate memory for those buckets.
-    Svc::BufferManager::BufferBins upBuffMgrBins;
-    memset(&upBuffMgrBins, 0, sizeof(upBuffMgrBins));
-    upBuffMgrBins.bins[0].bufferSize = FRAMER_BUFFER_SIZE;
-    upBuffMgrBins.bins[0].numBuffers = FRAMER_BUFFER_COUNT;
-    upBuffMgrBins.bins[1].bufferSize = DEFRAMER_BUFFER_SIZE;
-    upBuffMgrBins.bins[1].numBuffers = DEFRAMER_BUFFER_COUNT;
-    upBuffMgrBins.bins[2].bufferSize = COM_DRIVER_BUFFER_SIZE;
-    upBuffMgrBins.bins[2].numBuffers = COM_DRIVER_BUFFER_COUNT;
-    bufferManager.setup(BUFFER_MANAGER_ID, 0, mallocator, upBuffMgrBins);
+    Svc::BufferManager::BufferBins bufferMgrBins;
+    memset(&bufferMgrBins, 0, sizeof(bufferMgrBins));
+    bufferMgrBins.bins[0].bufferSize = FRAMER_BUFFER_SIZE;
+    bufferMgrBins.bins[0].numBuffers = FRAMER_BUFFER_COUNT;
+    bufferMgrBins.bins[1].bufferSize = DEFRAMER_BUFFER_SIZE;
+    bufferMgrBins.bins[1].numBuffers = DEFRAMER_BUFFER_COUNT;
+    bufferMgrBins.bins[2].bufferSize = COM_DRIVER_BUFFER_SIZE;
+    bufferMgrBins.bins[2].numBuffers = COM_DRIVER_BUFFER_COUNT;
+    bufferManager.setup(BUFFER_MANAGER_ID, 0, mallocator, bufferMgrBins);
 
-    // Framer and Deframer components need to be passed a protocol handler
-    framer.setup(framing);
-    deframer.setup(deframing);
+    // Frame accumulator needs to be passed a frame detector (default F Prime frame detector)
+    frameAccumulator.configure(frameDetector, 1, mallocator, 2048);
 
     // Command sequencer needs to allocate memory to hold contents of command sequences
     cmdSeq.allocateBuffer(0, mallocator, CMD_SEQ_BUFFER_SIZE);
@@ -128,14 +118,21 @@ void configureTopology() {
     // Note: Uncomment when using Svc:TlmPacketizer
     // tlmSend.setPacketList(ReferenceDeploymentPacketsPkts, ReferenceDeploymentPacketsIgnore, 1);
 
+    // ComQueue configuration
     // Events (highest-priority)
-    configurationTable.entries[0] = {.depth = 100, .priority = 0};
+    configurationTable.entries[0].depth = 100;
+    configurationTable.entries[0].priority = 0;
     // Telemetry
-    configurationTable.entries[1] = {.depth = 500, .priority = 2};
+    configurationTable.entries[1].depth = 500;
+    configurationTable.entries[1].priority = 2;
     // File Downlink
-    configurationTable.entries[2] = {.depth = 100, .priority = 1};
+    configurationTable.entries[2].depth = 100;
+    configurationTable.entries[2].priority = 1;
     // Allocation identifier is 0 as the MallocAllocator discards it
     comQueue.configure(configurationTable, 0, mallocator);
+    if (state.hostname != nullptr && state.port != 0) {
+        comDriver.configure(state.hostname, state.port);
+    }
 }
 
 // Public functions for use in main program are namespaced with deployment name ReferenceDeployment
@@ -150,7 +147,7 @@ void setupTopology(const TopologyState& state) {
     // Autocoded configuration. Function provided by autocoder.
     configComponents(state);
     // Deployment-specific component configuration. Function provided above. May be inlined, if desired.
-    configureTopology();
+    configureTopology(state);
     // Autocoded command registration. Function provided by autocoder.
     regCommands();
     // Autocoded parameter loading. Function provided by autocoder.
@@ -161,7 +158,6 @@ void setupTopology(const TopologyState& state) {
     if (state.hostname != nullptr && state.port != 0) {
         Os::TaskString name("ReceiveTask");
         // Uplink is configured for receive so a socket task is started
-        comDriver.configure(state.hostname, state.port);
         comDriver.start(name, COMM_PRIORITY, Default::STACK_SIZE);
     }
 }
