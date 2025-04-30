@@ -11,18 +11,15 @@
 #ifndef FPCONFIG_H_
 #define FPCONFIG_H_
 
-#ifdef  __cplusplus
+#ifdef __cplusplus
 extern "C" {
 #endif
-#include <Platform/PlatformTypes.h>
 #include <Fw/Types/BasicTypes.h>
-
+#include <Platform/PlatformTypes.h>
 
 // ----------------------------------------------------------------------
 // Type aliases
 // ----------------------------------------------------------------------
-
-
 
 // Define enumeration for Time base types
 // Note: maintaining C-style
@@ -300,7 +297,7 @@ typedef enum {
 
 // OS configuration
 #ifndef FW_CONSOLE_HANDLE_MAX_SIZE
-#define FW_CONSOLE_HANDLE_MAX_SIZE 24  //!< Maximum size of a handle for OS queues
+#define FW_CONSOLE_HANDLE_MAX_SIZE 8192  //!< Maximum size of a handle for OS queues
 #endif
 
 #ifndef FW_TASK_HANDLE_MAX_SIZE
@@ -358,7 +355,7 @@ typedef enum {
 
 // *** NOTE configuration checks are in Fw/Cfg/ConfigCheck.cpp in order to have
 // the type definitions in Fw/Types/BasicTypes available.
-#ifdef  __cplusplus
+#ifdef __cplusplus
 }
 #endif
 
