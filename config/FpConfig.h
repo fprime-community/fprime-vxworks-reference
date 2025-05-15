@@ -11,15 +11,18 @@
 #ifndef FPCONFIG_H_
 #define FPCONFIG_H_
 
-#ifdef __cplusplus
+#ifdef  __cplusplus
 extern "C" {
 #endif
-#include <Fw/Types/BasicTypes.h>
 #include <Platform/PlatformTypes.h>
+#include <Fw/Types/BasicTypes.h>
+
 
 // ----------------------------------------------------------------------
 // Type aliases
 // ----------------------------------------------------------------------
+
+
 
 // Define enumeration for Time base types
 // Note: maintaining C-style
@@ -79,11 +82,6 @@ typedef enum {
 
 #ifndef FW_QUEUE_REGISTRATION
 #define FW_QUEUE_REGISTRATION 1  //!< Indicates whether or not queue registration is used
-#endif
-
-#ifndef FW_BAREMETAL_SCHEDULER
-#define FW_BAREMETAL_SCHEDULER \
-    0  //!< Indicates whether or not a baremetal scheduler should be used. Alternatively the Os scheduler is used.
 #endif
 
 // On some systems, use of *printf family functions (snprintf, printf, etc) require a prohibitive amount of program
@@ -317,7 +315,7 @@ typedef enum {
 #endif
 
 #ifndef FW_DIRECTORY_HANDLE_MAX_SIZE
-#define FW_DIRECTORY_HANDLE_MAX_SIZE 16  //!< Maximum size of a handle for OS resources (files, queues, locks, etc.)
+#define FW_DIRECTORY_HANDLE_MAX_SIZE 32  //!< Maximum size of a handle for OS resources (files, queues, locks, etc.)
 #endif
 
 #ifndef FW_FILESYSTEM_HANDLE_MAX_SIZE
@@ -355,7 +353,7 @@ typedef enum {
 
 // *** NOTE configuration checks are in Fw/Cfg/ConfigCheck.cpp in order to have
 // the type definitions in Fw/Types/BasicTypes available.
-#ifdef __cplusplus
+#ifdef  __cplusplus
 }
 #endif
 

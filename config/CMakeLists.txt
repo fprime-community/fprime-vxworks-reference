@@ -1,16 +1,17 @@
-####
-# config/CMakeLists.txt:
-#
-# Sets a list of source files for cmake to process as part of autocoding.
-####
-register_fprime_module(
-        config
-    AUTOCODER_INPUTS
-        "${CMAKE_CURRENT_LIST_DIR}/AcConstants.fpp"
-        "${CMAKE_CURRENT_LIST_DIR}/DpCfg.fpp"
-        "${CMAKE_CURRENT_LIST_DIR}/ComCfg.fpp"
-        "${CMAKE_CURRENT_LIST_DIR}/FpConfig.fpp"
-        "${CMAKE_CURRENT_LIST_DIR}/FpySequencerCfg.fpp"
-        "${CMAKE_CURRENT_LIST_DIR}/PolyDbCfg.fpp"
-        "${CMAKE_CURRENT_LIST_DIR}/VersionCfg.fpp"
-)
+if(FPRIME_PLATFORM MATCHES "VxWorks.*")
+  register_fprime_config(
+          fprime-vxworks-reference-config
+      CONFIGURATION_OVERRIDES
+          "${CMAKE_CURRENT_LIST_DIR}/FpConfig.h"
+          "${CMAKE_CURRENT_LIST_DIR}/VxWorksCfg.hpp"
+      INTERFACE # No buildable files generated
+  )
+else()
+  register_fprime_config(
+          fprime-vxworks-reference-config
+      CONFIGURATION_OVERRIDES
+          "${CMAKE_CURRENT_LIST_DIR}/FpConfig.h"
+      INTERFACE # No buildable files generated
+  )
+endif()
+
