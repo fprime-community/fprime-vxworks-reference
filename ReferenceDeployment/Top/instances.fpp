@@ -39,7 +39,7 @@ module ReferenceDeployment {
     priority 55
 
   instance comQueue: Svc.ComQueue base id 0x0700 \
-      queue size Default.QUEUE_SIZE \
+      queue size 50 \
       stack size Default.STACK_SIZE \
       priority 56
 
@@ -87,7 +87,7 @@ module ReferenceDeployment {
   # ----------------------------------------------------------------------
 
   instance $health: Svc.Health base id 0x2000 \
-    queue size 63
+    queue size 25
 
   # ----------------------------------------------------------------------
   # Passive component instances
@@ -96,7 +96,7 @@ module ReferenceDeployment {
   @ Communications driver. May be swapped with other com drivers like UART or TCP
   instance comDriver: Drv.TcpServer base id 0x4000
 
-  instance framer: Svc.Framer base id 0x4100
+  instance framer: Svc.FprimeFramer base id 0x4100
 
   instance fatalAdapter: Svc.AssertFatalAdapter base id 0x4200
 
@@ -110,12 +110,15 @@ module ReferenceDeployment {
 
   instance textLogger: Svc.PassiveTextLogger base id 0x4800
 
-  instance deframer: Svc.Deframer base id 0x4900
+  instance deframer: Svc.FprimeDeframer base id 0x4900
 
   instance systemResources: Svc.SystemResources base id 0x4A00
 
   instance comStub: Svc.ComStub base id 0x4B00
 
-  instance watchdogTimer: VxWorksSvc.VxWatchDogTimer base id 0x4C00
+  instance frameAccumulator: Svc.FrameAccumulator base id 0x4C00
 
+  instance fprimeRouter: Svc.FprimeRouter base id 0x4D00
+
+  instance watchdogTimer: VxWorksSvc.VxWatchDogTimer base id 0x4E00
 }
