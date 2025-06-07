@@ -49,6 +49,7 @@ module ReferenceDeployment {
     instance rateGroup3
     instance rateGroupDriver
     instance textLogger
+    instance version
     instance systemResources
 
     # ----------------------------------------------------------------------

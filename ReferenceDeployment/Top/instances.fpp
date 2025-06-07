@@ -108,6 +108,8 @@ module ReferenceDeployment {
 
   instance rateGroupDriver: Svc.RateGroupDriver base id 0x4600
 
+  instance version: Svc.Version base id 0x4700
+
   instance textLogger: Svc.PassiveTextLogger base id 0x4800
 
   instance deframer: Svc.FprimeDeframer base id 0x4900
