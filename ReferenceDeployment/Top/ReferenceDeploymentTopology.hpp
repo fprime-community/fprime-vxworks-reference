@@ -62,18 +62,17 @@ void teardownTopology(const TopologyState& state);
 /**
  * \brief start a timer at the specified interval
  *
- * This loop is started via a startTimer call.
+ * This loop is stopped via a stopRateGroups call.
  *
- * \param interval: delay for each cycle. Default: 1Hz.
  */
-void startTimer(Fw::TimeInterval interval = Fw::TimeInterval(1, 0));
+void startRateGroups(Fw::TimeInterval interval = Fw::TimeInterval(1,0));
 
 /**
- * \brief stop the rate group cycle started by startTimer
+ * \brief stop the rate groups 
  *
- * This stops the timer started by startTimer.
+ * This stops the cycle started by startRateGroups.
  */
-void stopTimer();
+void stopRateGroups();
 
 }  // namespace ReferenceDeployment
 #endif

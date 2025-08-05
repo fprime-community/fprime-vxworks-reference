@@ -28,7 +28,7 @@ void fsw_main(char* address, U16 port) {
 
     // Setup, cycle, and teardown topology
     ReferenceDeployment::setupTopology(inputs);
-    ReferenceDeployment::startTimer(Fw::TimeInterval(1, 0));  // Program loop cycling rate groups at 1Hz
+    ReferenceDeployment::startRateGroups(Fw::TimeInterval(1, 0));  // Program loop cycling rate groups at 1Hz
     ReferenceDeployment::teardownTopology(inputs);
 }
 
