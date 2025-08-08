@@ -49,7 +49,7 @@ module ReferenceDeployment {
   # Telemetry packets (only used when TlmPacketizer is used)
   # ----------------------------------------------------------------------
 
-    include "ReferenceDeploymentPackets.fppi"
+    # include "ReferenceDeploymentPackets.fppi"
 
   # ----------------------------------------------------------------------
   # Direct graph specifiers
@@ -86,7 +86,6 @@ module ReferenceDeployment {
 
       # ComStub <-> ComDriver (Downlink)
       ComCcsds.comStub.drvSendOut      -> comDriver.$send
-      comDriver.sendReturnOut -> ComCcsds.comStub.drvSendReturnIn
       comDriver.ready         -> ComCcsds.comStub.drvConnected
     }
 
