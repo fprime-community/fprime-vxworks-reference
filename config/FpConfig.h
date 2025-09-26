@@ -11,12 +11,11 @@
 #ifndef FPCONFIG_H_
 #define FPCONFIG_H_
 
-#ifdef  __cplusplus
+#ifdef __cplusplus
 extern "C" {
 #endif
-#include <Platform/PlatformTypes.h>
 #include <Fw/Types/BasicTypes.h>
-
+#include <Platform/PlatformTypes.h>
 
 // ----------------------------------------------------------------------
 // Type aliases
@@ -90,8 +89,8 @@ extern "C" {
 // This generates code to connect to serialized ports
 #ifndef FW_PORT_SERIALIZATION
 #define FW_PORT_SERIALIZATION \
-    1  //!< Indicates whether there is code in ports to serialize the call (more code, but ability to serialize calls
-       //!< for multi-note systems)
+    1  //!< Indicates whether there is code in ports to serialize the call (more code, but ability to serialize
+       //!< calls for multi-note systems)
 #endif
 
 // Component Facilities
@@ -232,9 +231,9 @@ extern "C" {
 #define FW_PARAM_STRING_MAX_SIZE 40  //!< Max size of parameter string type
 #endif
 
-// Specifies the maximum size of a file upload chunk
+// Specifies the maximum size of a file downlink chunk
 #ifndef FW_FILE_BUFFER_MAX_SIZE
-#define FW_FILE_BUFFER_MAX_SIZE 255  //!< Max size of file buffer (i.e. chunk of file)
+#define FW_FILE_BUFFER_MAX_SIZE FW_COM_BUFFER_MAX_SIZE  //!< Max size of file buffer (i.e. chunk of file)
 #endif
 
 // Specifies the maximum size of a string in an interface call
@@ -264,19 +263,7 @@ extern "C" {
 #define FW_AMPCS_COMPATIBLE 0  //!< Whether or not JPL AMPCS ground system support is enabled.
 #endif
 
-// These settings configure whether or not the timebase and context values for the Fw::Time
-// class are used. Some systems may not use or need those fields
-
-#ifndef FW_USE_TIME_BASE
-#define FW_USE_TIME_BASE 1  //!< Whether or not to use the time base
-#endif
-
-#ifndef FW_USE_TIME_CONTEXT
-#define FW_USE_TIME_CONTEXT 1  //!< Whether or not to serialize the time context
-#endif
-
 // Configuration for Fw::String
-
 #ifndef FW_FIXED_LENGTH_STRING_SIZE
 #define FW_FIXED_LENGTH_STRING_SIZE 256  //!< Character array size for Fw::String
 #endif
@@ -303,7 +290,7 @@ extern "C" {
 #endif
 
 #ifndef FW_DIRECTORY_HANDLE_MAX_SIZE
-#define FW_DIRECTORY_HANDLE_MAX_SIZE 32  //!< Maximum size of a handle for OS resources (files, queues, locks, etc.)
+#define FW_DIRECTORY_HANDLE_MAX_SIZE 16  //!< Maximum size of a handle for OS resources (files, queues, locks, etc.)
 #endif
 
 #ifndef FW_FILESYSTEM_HANDLE_MAX_SIZE
@@ -311,7 +298,7 @@ extern "C" {
 #endif
 
 #ifndef FW_RAW_TIME_HANDLE_MAX_SIZE
-#define FW_RAW_TIME_HANDLE_MAX_SIZE 32  //!< Maximum size of a handle for OS::RawTime objects
+#define FW_RAW_TIME_HANDLE_MAX_SIZE 56  //!< Maximum size of a handle for OS::RawTime objects
 #endif
 
 #ifndef FW_RAW_TIME_SERIALIZATION_MAX_SIZE
@@ -339,9 +326,13 @@ extern "C" {
 #define FW_FILE_CHUNK_SIZE 512  //!< Chunk size for working with files in the OSAL layer
 #endif
 
+#ifndef FW_ASSERT_COUNT_MAX
+#define FW_ASSERT_COUNT_MAX 10  //!< Maximum number of cascading FW_ASSERT check failures before forcing a system assert
+#endif
+
 // *** NOTE configuration checks are in Fw/Cfg/ConfigCheck.cpp in order to have
 // the type definitions in Fw/Types/BasicTypes available.
-#ifdef  __cplusplus
+#ifdef __cplusplus
 }
 #endif
 
