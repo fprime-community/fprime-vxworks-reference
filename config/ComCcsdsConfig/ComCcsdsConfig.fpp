@@ -4,14 +4,17 @@ module ComCcsdsConfig {
     
     module QueueSizes {
         constant comQueue    = 50
+        constant aggregator  = 10
     }
     
     module StackSizes {
         constant comQueue   = 64 * 1024
+        constant aggregator = 64 * 1024
     }
 
     module Priorities {
         constant comQueue   = 56
+        constant aggregator = 57
     }
 
     # Queue configuration constants
