@@ -62,6 +62,7 @@ module ReferenceDeployment {
   instance systemResources: Svc.SystemResources base id 0x10012000
 
   instance timer: VxWorksSvc.VxWatchDogTimer base id 0x10013000
+
   instance comDriver: Drv.TcpServer base id 0x10014000
 
 }

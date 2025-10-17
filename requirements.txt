@@ -1,4 +1,3 @@
 # Base on:
 # -r https://raw.githubusercontent.com/nasa/fprime/refs/tags/v4.0.0a1/requirements.txt
 -r lib/fprime/requirements.txt
-lib/fprime-vxworks/ci
