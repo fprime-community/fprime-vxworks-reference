@@ -28,6 +28,7 @@ U32 rateGroup3Context[Svc::ActiveRateGroup::CONNECTION_COUNT_MAX] = {};
 
 enum TopologyConstants {
     COMM_PRIORITY = 49,
+    COMM_AFFINITTY = 0,
 };
 
 /**
@@ -76,7 +77,8 @@ void setupTopology(const TopologyState& state) {
     if (state.hostname != nullptr && state.port != 0) {
         Os::TaskString name("ReceiveTask");
         // Uplink is configured for receive so a socket task is started
-        comDriver.start(name, COMM_PRIORITY, Default::STACK_SIZE, Os::Task::TASK_DEFAULT, COMM_PRIORITY, Default::STACK_SIZE);
+        comDriver.start(name, COMM_PRIORITY, Default::STACK_SIZE, COMM_AFFINITTY, COMM_PRIORITY, Default::STACK_SIZE,
+                        COMM_AFFINITTY);
     }
 }
 
