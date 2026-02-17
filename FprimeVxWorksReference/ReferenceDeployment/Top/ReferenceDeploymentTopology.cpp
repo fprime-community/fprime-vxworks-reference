@@ -4,7 +4,7 @@
 //
 // ======================================================================
 // Provides access to autocoded functions
-#include <ReferenceDeployment/Top/ReferenceDeploymentTopologyAc.hpp>
+#include <FprimeVxWorksReference/ReferenceDeployment/Top/FprimeVxWorksReferenceTopologyAc.hpp>
 // Note: Uncomment when using Svc:TlmPacketizer
 // #include <ReferenceDeployment/Top/ReferenceDeploymentPacketsAc.hpp>
 
@@ -12,7 +12,7 @@
 #include <Fw/Types/MallocAllocator.hpp>
 
 // Allows easy reference to objects in FPP/autocoder required namespaces
-using namespace ReferenceDeployment;
+using namespace FprimeVxWorksReference;
 
 // Instantiate a malloc allocator for cmdSeq buffer allocation
 Fw::MallocAllocator mallocator;
@@ -51,7 +51,7 @@ void configureTopology() {
 }
 
 // Public functions for use in main program are namespaced with deployment name ReferenceDeployment
-namespace ReferenceDeployment {
+namespace FprimeVxWorksReference {
 void setupTopology(const TopologyState& state) {
     // Autocoded initialization. Function provided by autocoder.
     initComponents(state);
@@ -125,4 +125,4 @@ void teardownTopology(const TopologyState& state) {
 
     tearDownComponents(state);
 }
-};  // namespace ReferenceDeployment
+};  // namespace FprimeVxWorksReference

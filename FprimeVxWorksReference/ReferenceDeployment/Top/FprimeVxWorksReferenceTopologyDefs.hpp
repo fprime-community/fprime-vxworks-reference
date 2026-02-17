@@ -23,7 +23,7 @@
 #include "Svc/Subtopologies/ComCcsds/Ports_ComPacketQueueEnumAc.hpp"
 
 // Include autocoded FPP constants
-#include "ReferenceDeployment/Top/FppConstantsAc.hpp"
+#include "FprimeVxWorksReference/ReferenceDeployment/Top/FppConstantsAc.hpp"
 
 /**
  * \brief required ping constants
@@ -45,27 +45,27 @@
  * ```
  */
 namespace PingEntries {
-namespace ReferenceDeployment_rateGroup1 {
+namespace FprimeVxWorksReference_rateGroup1 {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace ReferenceDeployment_rateGroup2 {
+namespace FprimeVxWorksReference_rateGroup2 {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace ReferenceDeployment_rateGroup3 {
+namespace FprimeVxWorksReference_rateGroup3 {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace ReferenceDeployment_cmdSeq {
+namespace FprimeVxWorksReference_cmdSeq {
 enum { WARN = 3, FATAL = 5 };
 }
 }  // namespace PingEntries
 
 // Definitions are placed within a namespace named after the deployment
-namespace ReferenceDeployment {
+namespace FprimeVxWorksReference {
 
 /**
  * \brief required type definition to carry state
  *
- * The topology autocoder requires an object that carries state with the name `ReferenceDeployment::TopologyState`. Only
+ * The topology autocoder requires an object that carries state with the name `FprimeVxWorksReference::TopologyState`. Only
  * the type definition is required by the autocoder and the contents of this object are otherwise opaque to the
  * autocoder. The contents are entirely up to the definition of the project. Here, they are derived from command line
  * inputs.
@@ -80,5 +80,5 @@ struct TopologyState {
 };
 
 namespace PingEntries = ::PingEntries;
-}  // namespace ReferenceDeployment
+}  // namespace FprimeVxWorksReference
 #endif
