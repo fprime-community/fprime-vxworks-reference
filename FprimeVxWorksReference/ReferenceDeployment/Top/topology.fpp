@@ -1,4 +1,4 @@
-module ReferenceDeployment {
+module FprimeVxWorksReference {
 
   # ----------------------------------------------------------------------
   # Symbolic constants for port numbers
@@ -10,7 +10,7 @@ module ReferenceDeployment {
     rateGroup3
   }
 
-  topology ReferenceDeployment {
+  topology FprimeVxWorksReference {
 
   # ----------------------------------------------------------------------
   # Subtopology imports
@@ -126,7 +126,7 @@ module ReferenceDeployment {
       CdhCore.cmdDisp.seqCmdStatus -> cmdSeq.cmdResponseIn
     }
 
-    connections ReferenceDeployment {
+    connections FprimeVxWorksReference {
 
     }
 

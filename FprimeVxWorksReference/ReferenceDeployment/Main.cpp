@@ -4,7 +4,7 @@
 //
 // ======================================================================
 // Used to access topology functions
-#include <ReferenceDeployment/Top/ReferenceDeploymentTopology.hpp>
+#include <FprimeVxWorksReference/ReferenceDeployment/Top/ReferenceDeploymentTopology.hpp>
 // OSAL initialization
 #include <Os/Os.hpp>
 
@@ -22,14 +22,14 @@
 void fsw_main(char* address, U16 port) {
     Os::init();
     // Object for communicating state to the reference topology
-    ReferenceDeployment::TopologyState inputs;
+    FprimeVxWorksReference::TopologyState inputs;
     inputs.hostname = address;
     inputs.port = port;
 
     // Setup, cycle, and teardown topology
-    ReferenceDeployment::setupTopology(inputs);
-    ReferenceDeployment::startRateGroups(Fw::TimeInterval(1, 0));  // Program loop cycling rate groups at 1Hz
-    ReferenceDeployment::teardownTopology(inputs);
+    FprimeVxWorksReference::setupTopology(inputs);
+    FprimeVxWorksReference::startRateGroups(Fw::TimeInterval(1, 0));  // Program loop cycling rate groups at 1Hz
+    FprimeVxWorksReference::teardownTopology(inputs);
 }
 
 // Include a main function when building for Linux/MacOS

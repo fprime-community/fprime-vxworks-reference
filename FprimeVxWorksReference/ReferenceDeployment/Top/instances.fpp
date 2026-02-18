@@ -1,4 +1,4 @@
-module ReferenceDeployment {
+module FprimeVxWorksReference {
 
   # ----------------------------------------------------------------------
   # Base ID Convention
