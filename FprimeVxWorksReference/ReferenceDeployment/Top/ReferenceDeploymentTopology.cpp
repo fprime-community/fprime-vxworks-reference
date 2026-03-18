@@ -11,6 +11,8 @@
 // Necessary project-specified types
 #include <Fw/Types/MallocAllocator.hpp>
 
+#include <Os/Console.hpp>
+
 // Allows easy reference to objects in FPP/autocoder required namespaces
 using namespace FprimeVxWorksReference;
 
@@ -38,6 +40,7 @@ enum TopologyConstants {
  * desired, but is extracted here for clarity.
  */
 void configureTopology() {
+    Os::Console::write(Fw::String("Configuring topology\n"));
     // Rate group driver needs a divisor list
     rateGroupDriver.configure(rateGroupDivisorsSet);
 
@@ -53,6 +56,7 @@ void configureTopology() {
 // Public functions for use in main program are namespaced with deployment name ReferenceDeployment
 namespace FprimeVxWorksReference {
 void setupTopology(const TopologyState& state) {
+    Os::Console::write(Fw::String("Starting setupTopology\n"));
     // Autocoded initialization. Function provided by autocoder.
     initComponents(state);
     // Autocoded id setup. Function provided by autocoder.
@@ -85,6 +89,7 @@ Os::Mutex cycleLock;
 volatile bool cycleFlag = true;
 
 void startRateGroups(Fw::TimeInterval interval) {
+    Os::Console::write(Fw::String("Starting rate groups\n"));
     // This timer drives the fundamental tick rate of the system.
     // Svc::RateGroupDriver will divide this down to the slower rate groups.
     // This call will block until the stopRateGroups() call is made.
