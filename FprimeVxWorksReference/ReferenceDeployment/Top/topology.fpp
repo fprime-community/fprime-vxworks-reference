@@ -10,7 +10,7 @@ module FprimeVxWorksReference {
     rateGroup3
   }
 
-  topology FprimeVxWorksReference {
+  deployment topology FprimeVxWorksReference {
 
   # ----------------------------------------------------------------------
   # Subtopology imports
