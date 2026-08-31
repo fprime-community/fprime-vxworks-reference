@@ -35,9 +35,6 @@ constant FW_COUNTING_SEMAPHORE_HANDLE_MAX_SIZE = 48
 @ Maximum size of a handle for Os::ConditionVariable
 constant FW_CONDITION_VARIABLE_HANDLE_MAX_SIZE = 56
 
-@ Maximum size of a handle for Os::CountingSemaphore
-constant FW_COUNTING_SEMAPHORE_HANDLE_MAX_SIZE = 48
-
 @ Maximum size of a handle for Os::Cpu
 constant FW_CPU_HANDLE_MAX_SIZE = 16
 
