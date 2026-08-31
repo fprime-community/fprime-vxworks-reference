@@ -48,6 +48,9 @@ void configureTopology() {
 
     // Command sequencer needs to allocate memory to hold contents of command sequences
     cmdSeq.allocateBuffer(0, mallocator, 5 * 1024);
+
+    // FileHandling requires the using topology to supply the parameter database file name
+    FileHandling::prmDb.configure("PrmDb.dat");
 }
 
 // Public functions for use in main program are namespaced with deployment name ReferenceDeployment
