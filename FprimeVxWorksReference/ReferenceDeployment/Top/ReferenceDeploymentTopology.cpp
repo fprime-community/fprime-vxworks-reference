@@ -22,9 +22,9 @@ Svc::RateGroupDriver::DividerSet rateGroupDivisorsSet{{{1, 0}, {2, 0}, {4, 0}}};
 
 // Rate groups may supply a context token to each of the attached children whose purpose is set by the project. The
 // reference topology sets each token to zero as these contexts are unused in this project.
-U32 rateGroup1Context[Svc::ActiveRateGroup::CONNECTION_COUNT_MAX] = {};
-U32 rateGroup2Context[Svc::ActiveRateGroup::CONNECTION_COUNT_MAX] = {};
-U32 rateGroup3Context[Svc::ActiveRateGroup::CONNECTION_COUNT_MAX] = {};
+Svc::ActiveRateGroup::ContextArray rateGroup1Context = {};
+Svc::ActiveRateGroup::ContextArray rateGroup2Context = {};
+Svc::ActiveRateGroup::ContextArray rateGroup3Context = {};
 
 enum TopologyConstants {
     COMM_PRIORITY = 49,
@@ -42,12 +42,15 @@ void configureTopology() {
     rateGroupDriver.configure(rateGroupDivisorsSet);
 
     // Rate groups require context arrays.
-    rateGroup1.configure(rateGroup1Context, FW_NUM_ARRAY_ELEMENTS(rateGroup1Context));
-    rateGroup2.configure(rateGroup2Context, FW_NUM_ARRAY_ELEMENTS(rateGroup2Context));
-    rateGroup3.configure(rateGroup3Context, FW_NUM_ARRAY_ELEMENTS(rateGroup3Context));
+    rateGroup1.configure(rateGroup1Context);
+    rateGroup2.configure(rateGroup2Context);
+    rateGroup3.configure(rateGroup3Context);
 
     // Command sequencer needs to allocate memory to hold contents of command sequences
     cmdSeq.allocateBuffer(0, mallocator, 5 * 1024);
+
+    // FileHandling requires the using topology to supply the parameter database file name
+    FileHandling::prmDb.configure("PrmDb.dat");
 }
 
 // Public functions for use in main program are namespaced with deployment name ReferenceDeployment

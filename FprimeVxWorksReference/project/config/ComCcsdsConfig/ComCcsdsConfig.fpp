@@ -17,6 +17,11 @@ module ComCcsdsConfig {
         constant aggregator = 57
     }
 
+    module CpuAffinities {
+        constant aggregator = Os.TASK_DEFAULT
+        constant comQueue   = Os.TASK_DEFAULT
+    }
+
     # Queue configuration constants
     module QueueDepths {
         constant events      = 100             
