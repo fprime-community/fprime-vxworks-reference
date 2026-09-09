@@ -33,6 +33,8 @@ module FileHandlingConfig {
     # File paths used by the subtopology
     module Paths {
         constant prmDbFile = "PrmDb.dat"       # Parameter database storage file
+        constant sandboxDir = "/"              # File-access sandbox for fileUplink, fileDownlink, fileManager, prmDb ("/" = unrestricted)
+
     }
 
     # File downlink configuration constants
